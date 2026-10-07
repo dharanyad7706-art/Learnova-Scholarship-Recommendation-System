@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ t["my_applications"] }} - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .language-select {
+            padding: 7px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-left: 15px;
+        }
+
+        .application-card {
+            margin-bottom: 25px;
+        }
+
+        .status-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .document-section {
+            margin-top: 20px;
+        }
+
+        .document-item {
+            margin: 8px 0;
+        }
+
+        .no-applications {
+            text-align: center;
+            padding: 30px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                {{ t["dashboard"] }}
+            </a>
+
+
+            <a href="/scholarships">
+                {{ t["scholarships"] }}
+            </a>
+
+
+            <a href="/eligibility">
+                {{ t["eligibility"] }}
+            </a>
+
+
+            <a href="/recommendations">
+                {{ t["recommendations"] }}
+            </a>
+
+
+            <a href="/profile">
+                {{ t["profile"] }}
+            </a>
+
+
+            <a href="/saved-scholarships">
+                {{ t["saved"] }}
+            </a>
+
+
+            <a href="/my-applications">
+                {{ t["my_applications"] }}
+            </a>
+
+
+            <a href="/notifications">
+                🔔 {{ t["notifications"] }}
+            </a>
+
+
+            <a href="/chatbot">
+                {{ t["chatbot"] }}
+            </a>
+
+
+            <a href="/logout">
+                {{ t["logout"] }}
+            </a>
+
+
+            <!-- Language Selector -->
+
+            <select
+                class="language-select"
+                onchange="changeLanguage(this.value)"
+            >
+
+                <option value="en"
+                    {% if current_language == "en" %}
+                    selected
+                    {% endif %}>
+                    English
+                </option>
+
+
+                <option value="ta"
+                    {% if current_language == "ta" %}
+                    selected
+                    {% endif %}>
+                    தமிழ்
+                </option>
+
+
+                <option value="hi"
+                    {% if current_language == "hi" %}
+                    selected
+                    {% endif %}>
+                    हिन्दी
+                </option>
+
+            </select>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <section class="dashboard">
+
+
+        <h1>
+            📋 {{ t["my_scholarship_applications"] }}
+        </h1>
+
+
+        <p>
+            {{ t["track_scholarships_applied"] }}
+        </p>
+
+
+
+        <div class="feature-container">
+
+
+            <!-- =================================================
+                 APPLICATIONS AVAILABLE
+            ================================================== -->
+
+            {% if applications %}
+
+
+                {% for application in applications %}
+
+
+                    <div class="feature-card application-card">
+
+
+                        <!-- Scholarship Name -->
+
+                        <h2>
+                            🎓 {{ application[2] }}
+                        </h2>
+
+
+                        <!-- Application ID -->
+
+                        <p>
+
+                            <strong>
+                                {{ t["application_id"] }}:
+                            </strong>
+
+                            #{{ application[0] }}
+
+                        </p>
+
+
+                        <!-- Student -->
+
+                        <p>
+
+                            <strong>
+                                {{ t["student"] }}:
+                            </strong>
+
+                            {{ application[3] }}
+
+                        </p>
+
+
+                        <!-- College -->
+
+                        <p>
+
+                            <strong>
+                                {{ t["college"] }}:
+                            </strong>
+
+                            {{ application[6] }}
+
+                        </p>
+
+
+                        <!-- Course -->
+
+                        <p>
+
+                            <strong>
+                                {{ t["course"] }}:
+                            </strong>
+
+                            {{ application[7] }}
+
+                        </p>
+
+
+                        <!-- Percentage -->
+
+                        <p>
+
+                            <strong>
+                                {{ t["percentage"] }}:
+                            </strong>
+
+                            {{ application[9] }}%
+
+                        </p>
+
+
+                        <!-- Family Income -->
+
+                        <p>
+
+                            <strong>
+                                {{ t["family_income"] }}:
+                            </strong>
+
+                            ₹{{ application[10] }}
+
+                        </p>
+
+
+
+                        <!-- =================================================
+                             APPLICATION STATUS
+                        ================================================== -->
+
+                        <div class="status-section">
+
+
+                            <h3>
+                                {{ t["application_status"] }}
+                            </h3>
+
+
+                            {% if application[15] == "Approved" %}
+
+                                <p>
+
+                                    ✅
+
+                                    <strong>
+                                        {{ t["approved"] }}
+                                    </strong>
+
+                                </p>
+
+
+                            {% elif application[15] == "Rejected" %}
+
+                                <p>
+
+                                    ❌
+
+                                    <strong>
+                                        {{ t["rejected"] }}
+                                    </strong>
+
+                                </p>
+
+
+                            {% elif application[15] == "Under Review" %}
+
+                                <p>
+
+                                    🔍
+
+                                    <strong>
+                                        {{ t["under_review"] }}
+                                    </strong>
+
+                                </p>
+
+
+                            {% else %}
+
+                                <p>
+
+                                    📤
+
+                                    <strong>
+                                        {{ t["submitted"] }}
+                                    </strong>
+
+                                </p>
+
+                            {% endif %}
+
+
+                            <br>
+
+
+                            <!-- View Application -->
+
+                            <a href="/application-status/{{ application[0] }}">
+
+                                <button type="button">
+
+                                    🔍
+                                    {{ t["view_application"] }}
+
+                                </button>
+
+                            </a>
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             DOCUMENTS
+                        ================================================== -->
+
+                        <div class="document-section">
+
+
+                            <h3>
+                                📎 {{ t["documents"] }}
+                            </h3>
+
+
+                            <!-- Marksheet -->
+
+                            <p class="document-item">
+
+                                {% if application[11] %}
+
+                                    ✅
+                                    {{ t["marksheet_uploaded"] }}
+
+                                {% else %}
+
+                                    ❌
+                                    {{ t["marksheet_not_uploaded"] }}
+
+                                {% endif %}
+
+                            </p>
+
+
+                            <!-- Income Certificate -->
+
+                            <p class="document-item">
+
+                                {% if application[12] %}
+
+                                    ✅
+                                    {{ t["income_certificate_uploaded"] }}
+
+                                {% else %}
+
+                                    ❌
+                                    {{ t["income_certificate_not_uploaded"] }}
+
+                                {% endif %}
+
+                            </p>
+
+
+                            <!-- Bonafide Certificate -->
+
+                            <p class="document-item">
+
+                                {% if application[13] %}
+
+                                    ✅
+                                    {{ t["bonafide_uploaded"] }}
+
+                                {% else %}
+
+                                    ❌
+                                    {{ t["bonafide_not_uploaded"] }}
+
+                                {% endif %}
+
+                            </p>
+
+
+                            <!-- College ID -->
+
+                            <p class="document-item">
+
+                                {% if application[14] %}
+
+                                    ✅
+                                    {{ t["college_id_uploaded"] }}
+
+                                {% else %}
+
+                                    ❌
+                                    {{ t["college_id_not_uploaded"] }}
+
+                                {% endif %}
+
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+
+            <!-- =================================================
+                 NO APPLICATIONS
+            ================================================== -->
+
+            {% else %}
+
+
+                <div class="feature-card no-applications">
+
+
+                    <h2>
+                        📭 {{ t["no_applications"] }}
+                    </h2>
+
+
+                    <p>
+                        {{ t["no_applications_message"] }}
+                    </p>
+
+
+                    <a href="/scholarships">
+
+                        <button type="button">
+
+                            🎓
+                            {{ t["find_scholarships"] }}
+
+                        </button>
+
+                    </a>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         LANGUAGE SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        function changeLanguage(language) {
+
+            window.location.href =
+                "/set-language/" + language;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

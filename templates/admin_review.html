@@ -1,0 +1,363 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Review Application - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA ADMIN
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/applications">
+                Applications
+            </a>
+
+            <a href="/admin/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="dashboard">
+
+        <div class="feature-card">
+
+
+            <h1>
+                🔍 Review Application
+            </h1>
+
+
+            <h2>
+                Application #{{ application[0] }}
+            </h2>
+
+
+            <hr>
+
+
+            <!-- Student Details -->
+
+            <h3>
+                👤 Student Details
+            </h3>
+
+
+            <p>
+                <strong>Name:</strong>
+                {{ application[3] }}
+            </p>
+
+
+            <p>
+                <strong>Email:</strong>
+                {{ application[4] }}
+            </p>
+
+
+            <p>
+                <strong>Mobile:</strong>
+                {{ application[5] }}
+            </p>
+
+
+            <p>
+                <strong>College:</strong>
+                {{ application[6] }}
+            </p>
+
+
+            <p>
+                <strong>Course:</strong>
+                {{ application[7] }}
+            </p>
+
+
+            <p>
+                <strong>Department:</strong>
+                {{ application[8] }}
+            </p>
+
+
+            <p>
+                <strong>Percentage:</strong>
+                {{ application[9] }}%
+            </p>
+
+
+            <p>
+                <strong>Family Income:</strong>
+                ₹{{ application[10] }}
+            </p>
+
+
+            <hr>
+
+
+            <!-- Scholarship -->
+
+            <h3>
+                🎓 Scholarship Details
+            </h3>
+
+
+            <p>
+                <strong>Scholarship:</strong>
+                {{ application[2] }}
+            </p>
+
+
+            <p>
+                <strong>Current Status:</strong>
+                {{ application[15] }}
+            </p>
+
+
+            <hr>
+
+
+            <!-- Uploaded Documents -->
+
+            <h3>
+                📎 Uploaded Documents
+            </h3>
+
+
+            {% if application[11] %}
+
+                <p>
+
+                    📄
+                    <strong>
+                        Marksheet:
+                    </strong>
+
+                    <a
+                        href="{{ url_for('uploaded_file', filename=application[11]) }}"
+                        target="_blank"
+                    >
+                        View Marksheet
+                    </a>
+
+                </p>
+
+            {% else %}
+
+                <p>
+                    📄 Marksheet:
+                    Not uploaded
+                </p>
+
+            {% endif %}
+
+
+            {% if application[12] %}
+
+                <p>
+
+                    📄
+                    <strong>
+                        Income Certificate:
+                    </strong>
+
+                    <a
+                        href="{{ url_for('uploaded_file', filename=application[12]) }}"
+                        target="_blank"
+                    >
+                        View Income Certificate
+                    </a>
+
+                </p>
+
+            {% else %}
+
+                <p>
+                    📄 Income Certificate:
+                    Not uploaded
+                </p>
+
+            {% endif %}
+
+
+            {% if application[13] %}
+
+                <p>
+
+                    📄
+                    <strong>
+                        Bonafide Certificate:
+                    </strong>
+
+                    <a
+                        href="{{ url_for('uploaded_file', filename=application[13]) }}"
+                        target="_blank"
+                    >
+                        View Bonafide Certificate
+                    </a>
+
+                </p>
+
+            {% else %}
+
+                <p>
+                    📄 Bonafide Certificate:
+                    Not uploaded
+                </p>
+
+            {% endif %}
+
+
+            {% if application[14] %}
+
+                <p>
+
+                    📄
+                    <strong>
+                        College ID:
+                    </strong>
+
+                    <a
+                        href="{{ url_for('uploaded_file', filename=application[14]) }}"
+                        target="_blank"
+                    >
+                        View College ID
+                    </a>
+
+                </p>
+
+            {% else %}
+
+                <p>
+                    📄 College ID:
+                    Not uploaded
+                </p>
+
+            {% endif %}
+
+
+            <hr>
+
+
+            <!-- Status Update -->
+
+            <h3>
+                🔄 Update Application Status
+            </h3>
+
+
+            <form
+                method="POST"
+                action="/admin/application/{{ application[0] }}/review"
+            >
+
+                <select
+                    name="status"
+                    required
+                >
+
+                    <option
+                        value="Submitted"
+                        {% if application[15] == "Submitted" %}
+                            selected
+                        {% endif %}
+                    >
+                        Submitted
+                    </option>
+
+
+                    <option
+                        value="Under Review"
+                        {% if application[15] == "Under Review" %}
+                            selected
+                        {% endif %}
+                    >
+                        Under Review
+                    </option>
+
+
+                    <option
+                        value="Approved"
+                        {% if application[15] == "Approved" %}
+                            selected
+                        {% endif %}
+                    >
+                        Approved
+                    </option>
+
+
+                    <option
+                        value="Rejected"
+                        {% if application[15] == "Rejected" %}
+                            selected
+                        {% endif %}
+                    >
+                        Rejected
+                    </option>
+
+                </select>
+
+
+                <br><br>
+
+
+                <button type="submit">
+                    💾 Update Status
+                </button>
+
+            </form>
+
+
+            <br>
+
+
+            <a href="/admin/applications">
+
+                <button type="button">
+                    ← Back to Applications
+                </button>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
+```

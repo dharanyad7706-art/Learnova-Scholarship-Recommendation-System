@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <div class="login-card">
+
+            <h1>LEARNOVA</h1>
+
+            <h2>Welcome Back!</h2>
+
+            <p>Login to explore scholarship opportunities</p>
+
+            <form method="POST" action="/login">
+
+                <!-- LOGIN TYPE -->
+
+                <label>Login As</label>
+
+                <div style="
+                    display: flex;
+                    gap: 20px;
+                    margin: 10px 0 20px 0;
+                ">
+
+                    <label style="display: flex; align-items: center; gap: 6px;">
+                        <input type="radio"
+                               name="role"
+                               value="student"
+                               checked>
+                        Student
+                    </label>
+
+                    <label style="display: flex; align-items: center; gap: 6px;">
+                        <input type="radio"
+                               name="role"
+                               value="admin">
+                        Admin
+                    </label>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <label>Email</label>
+
+                <input type="email"
+                       name="email"
+                       placeholder="Enter your email"
+                       required>
+
+
+                <!-- PASSWORD -->
+
+                <label>Password</label>
+
+                <input type="password"
+                       name="password"
+                       placeholder="Enter your password"
+                       required>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+
+            <!-- REGISTER -->
+
+            <p class="register-text">
+                Don't have an account?
+                <a href="/register">Register</a>
+            </p>
+
+
+            <!-- HOME -->
+
+            <a href="/" class="home-link">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

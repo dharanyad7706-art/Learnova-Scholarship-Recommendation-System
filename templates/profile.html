@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ t["my_profile"] }} - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .language-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                {{ t["dashboard"] }}
+            </a>
+
+            <a href="/scholarships">
+                {{ t["scholarships"] }}
+            </a>
+
+            <a href="/saved-scholarships">
+                {{ t["saved"] }}
+            </a>
+
+            <a href="/profile">
+                {{ t["profile"] }}
+            </a>
+
+            <a href="/logout">
+                {{ t["logout"] }}
+            </a>
+
+
+            <!-- Language Selector -->
+
+            <select
+                class="language-select"
+                onchange="window.location.href='/set-language/' + this.value"
+            >
+
+                <option value="en"
+                    {% if current_language == "en" %}
+                        selected
+                    {% endif %}
+                >
+                    English
+                </option>
+
+
+                <option value="ta"
+                    {% if current_language == "ta" %}
+                        selected
+                    {% endif %}
+                >
+                    தமிழ்
+                </option>
+
+
+                <option value="hi"
+                    {% if current_language == "hi" %}
+                        selected
+                    {% endif %}
+                >
+                    हिन्दी
+                </option>
+
+            </select>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =====================================================
+         MAIN PROFILE SECTION
+    ====================================================== -->
+
+    <section class="dashboard">
+
+
+        <!-- Page Heading -->
+
+        <h1>
+
+            👤 {{ t["my_profile"] }}
+
+        </h1>
+
+
+        <p>
+
+            {{ t["profile_description"] if
+               t.get("profile_description")
+               else "Your scholarship application information" }}
+
+        </p>
+
+
+
+        {% if profile %}
+
+
+            <div class="feature-container">
+
+
+                <!-- =================================================
+                     PERSONAL DETAILS
+                ================================================== -->
+
+                <div class="feature-card">
+
+                    <h3>
+
+                        👤 {{ t["personal_details"] }}
+
+                    </h3>
+
+
+                    <p>
+
+                        <b>{{ t["name"] }}:</b>
+
+                        {{ profile["name"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["email"] }}:</b>
+
+                        {{ profile["email"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["mobile"] }}:</b>
+
+                        {{ profile["mobile"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["dob"] }}:</b>
+
+                        {{ profile["dob"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["gender"] }}:</b>
+
+                        {{ profile["gender"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     EDUCATION
+                ================================================== -->
+
+                <div class="feature-card">
+
+                    <h3>
+
+                        🎓 {{ t["education"] }}
+
+                    </h3>
+
+
+                    <p>
+
+                        <b>{{ t["college"] }}:</b>
+
+                        {{ profile["college"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["course"] }}:</b>
+
+                        {{ profile["course"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["department"] }}:</b>
+
+                        {{ profile["department"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["year"] }}:</b>
+
+                        {{ profile["year"] or
+                           t["not_provided"] if
+                           t.get("not_provided")
+                           else "Not provided" }}
+
+                    </p>
+
+
+                    <p>
+
+                        <b>{{ t["percentage"] }}:</b>
+
+
+                        {% if profile["percentage"] is not none %}
+
+                            {{ profile["percentage"] }}%
+
+                        {% else %}
+
+                            {{ t["not_provided"] if
+                               t.get("not_provided")
+                               else "Not provided" }}
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FINANCIAL DETAILS
+                ================================================== -->
+
+                <div class="feature-card">
+
+                    <h3>
+
+                        💰 {{ t["financial_details"] }}
+
+                    </h3>
+
+
+                    <p>
+
+                        <b>
+
+                            {{ t["income"] }}:
+
+                        </b>
+
+
+                        {% if profile["income"] is not none %}
+
+                            ₹{{ profile["income"] }}
+
+                        {% else %}
+
+                            {{ t["not_provided"] if
+                               t.get("not_provided")
+                               else "Not provided" }}
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <br>
+
+
+
+            <!-- =================================================
+                 EDIT PROFILE
+            ================================================== -->
+
+            <a href="/profile/edit">
+
+                <button type="button">
+
+                    ✏️
+
+                    {{ t["edit_profile"] }}
+
+                </button>
+
+            </a>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 PROFILE NOT CREATED
+            ================================================== -->
+
+            <div class="feature-card">
+
+                <h2>
+
+                    {{ t["no_profile"] }}
+
+                </h2>
+
+
+                <p>
+
+                    {{ t["create_profile_message"] if
+                       t.get("create_profile_message")
+                       else "Please enter your details to create your scholarship profile." }}
+
+                </p>
+
+
+                <a href="/profile/edit">
+
+                    <button type="button">
+
+                        {{ t["create_profile"] }}
+
+                    </button>
+
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+
+        <br>
+
+
+
+        <!-- =================================================
+             BACK TO DASHBOARD
+        ================================================== -->
+
+        <a href="/dashboard">
+
+            <button type="button">
+
+                ← {{ t["back_dashboard"] }}
+
+            </button>
+
+        </a>
+
+
+    </section>
+
+
+</body>
+
+</html>

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ t.get("eligibility_check", "Eligibility Check") }} - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* ================================
+           ELIGIBILITY CONTAINER
+        ================================= */
+
+        .eligibility-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+
+        /* ================================
+           HEADER
+        ================================= */
+
+        .eligibility-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .eligibility-header h1 {
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .eligibility-header p {
+            font-size: 17px;
+            color: #555;
+        }
+
+
+        /* ================================
+           CARD
+        ================================= */
+
+        .eligibility-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .eligibility-card h2 {
+            margin-bottom: 20px;
+            color: #123d8d;
+        }
+
+
+        /* ================================
+           PROFILE DETAILS
+        ================================= */
+
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid #eeeeee;
+
+            gap: 20px;
+        }
+
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+
+        /* ================================
+           SCHOLARSHIP CARD
+        ================================= */
+
+        .scholarship-card {
+            background: #f8f9fa;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-top: 15px;
+
+            border-left: 5px solid #4CAF50;
+        }
+
+        .scholarship-card h3 {
+            margin-bottom: 15px;
+            color: #123d8d;
+        }
+
+        .scholarship-detail {
+            margin: 10px 0;
+            color: #444;
+        }
+
+
+        /* ================================
+           ELIGIBLE MESSAGE
+        ================================= */
+
+        .eligible-message {
+            padding: 15px;
+
+            background: #e8f5e9;
+
+            color: #256029;
+
+            border-radius: 10px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* ================================
+           NOT ELIGIBLE MESSAGE
+        ================================= */
+
+        .not-eligible-message {
+            padding: 15px;
+
+            background: #ffebee;
+
+            color: #b71c1c;
+
+            border-radius: 10px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* ================================
+           BUTTON
+        ================================= */
+
+        .button-container {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .eligibility-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 10px 20px;
+
+            background: #2563eb;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 7px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .eligibility-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* ================================
+           LANGUAGE
+        ================================= */
+
+        .language-select {
+            padding: 7px 10px;
+
+            border-radius: 6px;
+
+            border: 1px solid #ccc;
+
+            margin-left: 15px;
+
+            cursor: pointer;
+        }
+
+
+        /* ================================
+           EMPTY MESSAGE
+        ================================= */
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .empty-message h2 {
+            margin-bottom: 15px;
+        }
+
+        .empty-message p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            .eligibility-container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+
+            .eligibility-card {
+                padding: 20px;
+            }
+
+            .profile-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .eligibility-header h1 {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-brand">
+
+        <a href="/dashboard">
+            Learnova 🎓
+        </a>
+
+    </div>
+
+
+    <div class="nav-links">
+
+
+        <!-- DASHBOARD -->
+
+        <a href="/dashboard">
+            {{ t.get("dashboard", "Dashboard") }}
+        </a>
+
+
+        <!-- SCHOLARSHIPS -->
+
+        <a href="/scholarships">
+            {{ t.get("scholarships", "Scholarships") }}
+        </a>
+
+
+        <!-- ELIGIBILITY -->
+
+        <a href="/eligibility">
+            {{ t.get("eligibility", "Eligibility") }}
+        </a>
+
+
+        <!-- RECOMMENDATIONS -->
+
+        <a href="/recommendations">
+            {{ t.get("recommendations", "Recommendations") }}
+        </a>
+
+
+        <!-- PROFILE -->
+
+        <a href="/profile">
+            {{ t.get("profile", "Profile") }}
+        </a>
+
+
+        <!-- SAVED -->
+
+        <a href="/bookmarks">
+            {{ t.get("saved", "Saved") }}
+        </a>
+
+
+        <!-- APPLICATIONS -->
+
+        <a href="/my-applications">
+            {{ t.get("my_applications", "My Applications") }}
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a href="/notifications">
+            {{ t.get("notifications", "Notifications") }}
+        </a>
+
+
+        <!-- CHATBOT -->
+
+        <a href="/chatbot">
+            {{ t.get("chatbot", "Chatbot") }}
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a href="/logout">
+            {{ t.get("logout", "Logout") }}
+        </a>
+
+
+        <!-- LANGUAGE -->
+
+        <select
+            class="language-select"
+            onchange="changeLanguage(this.value)"
+        >
+
+            <option
+                value="en"
+                {% if current_language == "en" %}
+                    selected
+                {% endif %}
+            >
+                English
+            </option>
+
+
+            <option
+                value="ta"
+                {% if current_language == "ta" %}
+                    selected
+                {% endif %}
+            >
+                தமிழ்
+            </option>
+
+
+            <option
+                value="hi"
+                {% if current_language == "hi" %}
+                    selected
+                {% endif %}
+            >
+                हिन्दी
+            </option>
+
+        </select>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<section class="eligibility-container">
+
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
+
+    <div class="eligibility-header">
+
+        <h1>
+
+            🎓
+
+            {{ t.get(
+                "eligibility_check",
+                "Eligibility Check"
+            ) }}
+
+        </h1>
+
+
+        <p>
+
+            {{ t.get(
+                "check_eligibility",
+                "Check whether you are eligible."
+            ) }}
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PROFILE EXISTS
+    ================================================== -->
+
+    {% if profile %}
+
+
+    <!-- =================================================
+         PROFILE CARD
+    ================================================== -->
+
+    <div class="eligibility-card">
+
+        <h2>
+
+            👤
+
+            {{ t.get(
+                "my_profile_card",
+                "My Profile"
+            ) }}
+
+        </h2>
+
+
+        <!-- NAME -->
+
+        <div class="profile-item">
+
+            <span class="profile-label">
+
+                {{ t.get(
+                    "name",
+                    "Name"
+                ) }}
+
+            </span>
+
+
+            <span>
+
+                {{ profile["name"] or
+                   t.get(
+                       "not_provided",
+                       "Not provided"
+                   ) }}
+
+            </span>
+
+        </div>
+
+
+        <!-- COURSE -->
+
+        <div class="profile-item">
+
+            <span class="profile-label">
+
+                {{ t.get(
+                    "course",
+                    "Course"
+                ) }}
+
+            </span>
+
+
+            <span>
+
+                {{ profile["course"] or
+                   t.get(
+                       "not_provided",
+                       "Not provided"
+                   ) }}
+
+            </span>
+
+        </div>
+
+
+        <!-- YEAR -->
+
+        <div class="profile-item">
+
+            <span class="profile-label">
+
+                {{ t.get(
+                    "year",
+                    "Year"
+                ) }}
+
+            </span>
+
+
+            <span>
+
+                {{ profile["year"] or
+                   t.get(
+                       "not_provided",
+                       "Not provided"
+                   ) }}
+
+            </span>
+
+        </div>
+
+
+        <!-- PERCENTAGE -->
+
+        <div class="profile-item">
+
+            <span class="profile-label">
+
+                {{ t.get(
+                    "percentage",
+                    "Percentage"
+                ) }}
+
+            </span>
+
+
+            <span>
+
+                {% if profile["percentage"] is not none %}
+
+                    {{ profile["percentage"] }}%
+
+                {% else %}
+
+                    {{ t.get(
+                        "not_provided",
+                        "Not provided"
+                    ) }}
+
+                {% endif %}
+
+            </span>
+
+        </div>
+
+
+        <!-- FAMILY INCOME -->
+
+        <div class="profile-item">
+
+            <span class="profile-label">
+
+                {{ t.get(
+                    "annual_family_income",
+                    "Annual Family Income"
+                ) }}
+
+            </span>
+
+
+            <span>
+
+                {% if profile["income"] is not none %}
+
+                    ₹{{ profile["income"] }}
+
+                {% else %}
+
+                    {{ t.get(
+                        "not_provided",
+                        "Not provided"
+                    ) }}
+
+                {% endif %}
+
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         RESULTS
+    ================================================== -->
+
+    {% if results %}
+
+
+    <div class="eligibility-card">
+
+        <h2>
+
+            🎯
+
+            {{ t.get(
+                "eligibility_results",
+                "Eligibility Results"
+            ) }}
+
+        </h2>
+
+
+        {% for result in results %}
+
+
+        <!-- SCHOLARSHIP -->
+
+        <div class="scholarship-card">
+
+
+            <!-- SCHOLARSHIP NAME -->
+
+            <h3>
+
+                🎓
+
+                {{ result["name"] }}
+
+            </h3>
+
+
+
+            <!-- ELIGIBILITY STATUS -->
+
+            {% if result.get("eligible") %}
+
+            <div class="eligible-message">
+
+                <strong>
+
+                    ✅
+
+                    {{ t.get(
+                        "eligible",
+                        "Eligible"
+                    ) }}
+
+                </strong>
+
+            </div>
+
+            {% else %}
+
+            <div class="not-eligible-message">
+
+                <strong>
+
+                    ❌
+
+                    {{ t.get(
+                        "not_eligible",
+                        "Not Eligible"
+                    ) }}
+
+                </strong>
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- MATCH SCORE -->
+
+            {% if result.get("match_score") is not none %}
+
+            <div class="scholarship-detail">
+
+                <strong>
+
+                    {{ t.get(
+                        "match_score",
+                        "Match Score"
+                    ) }}:
+
+                </strong>
+
+                {{ result["match_score"] }}%
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- MINIMUM PERCENTAGE -->
+
+            {% if result.get("minimum_percentage") is not none %}
+
+            <div class="scholarship-detail">
+
+                <strong>
+
+                    {{ t.get(
+                        "minimum_percentage",
+                        "Minimum Percentage"
+                    ) }}:
+
+                </strong>
+
+                {{ result["minimum_percentage"] }}%
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- MAXIMUM INCOME -->
+
+            {% if result.get("maximum_income") is not none %}
+
+            <div class="scholarship-detail">
+
+                <strong>
+
+                    {{ t.get(
+                        "maximum_family_income",
+                        "Maximum Family Income"
+                    ) }}:
+
+                </strong>
+
+                ₹{{ result["maximum_income"] }}
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- ELIGIBLE COURSE -->
+
+            {% if result.get("eligible_course") %}
+
+            <div class="scholarship-detail">
+
+                <strong>
+
+                    {{ t.get(
+                        "eligible_course",
+                        "Eligible Course"
+                    ) }}:
+
+                </strong>
+
+                {{ result["eligible_course"] }}
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- ELIGIBLE YEAR -->
+
+            {% if result.get("eligible_year") %}
+
+            <div class="scholarship-detail">
+
+                <strong>
+
+                    {{ t.get(
+                        "eligible_year",
+                        "Eligible Year"
+                    ) }}:
+
+                </strong>
+
+                {{ result["eligible_year"] }}
+
+            </div>
+
+            {% endif %}
+
+
+
+            <!-- OFFICIAL WEBSITE -->
+
+            {% if result.get("official_link") %}
+
+            <div class="button-container">
+
+                <a
+                    href="{{ result['official_link'] }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="eligibility-button"
+                >
+
+                    🌐
+
+                    {{ t.get(
+                        "visit_official_website",
+                        "Visit Official Website"
+                    ) }}
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+
+    <!-- =================================================
+         NO MATCHING SCHOLARSHIPS
+    ================================================== -->
+
+    <div class="eligibility-card">
+
+        <div class="empty-message">
+
+            <h2>
+
+                📋
+
+                {{ t.get(
+                    "no_matching_scholarships",
+                    "No Matching Scholarships"
+                ) }}
+
+            </h2>
+
+
+            <p>
+
+                {{ t.get(
+                    "no_scholarships_match_profile",
+                    "No scholarships currently match your profile."
+                ) }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    {% else %}
+
+
+    <!-- =================================================
+         PROFILE NOT CREATED
+    ================================================== -->
+
+    <div class="eligibility-card">
+
+        <div class="empty-message">
+
+            <h2>
+
+                👤
+
+                {{ t.get(
+                    "profile_not_created",
+                    "Profile Not Created"
+                ) }}
+
+            </h2>
+
+
+            <p>
+
+                {{ t.get(
+                    "create_profile_message",
+                    "Please create your profile to check scholarship eligibility."
+                ) }}
+
+            </p>
+
+
+            <div class="button-container">
+
+                <!-- IMPORTANT:
+                     Flask route is /profile/edit
+                -->
+
+                <a
+                    href="/profile/edit"
+                    class="eligibility-button"
+                >
+
+                    {{ t.get(
+                        "create_profile",
+                        "Create Profile"
+                    ) }}
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =================================================
+         BACK TO DASHBOARD
+    ================================================== -->
+
+    <div class="button-container">
+
+        <a
+            href="/dashboard"
+            class="eligibility-button"
+        >
+
+            ←
+
+            {{ t.get(
+                "back_to_dashboard",
+                "Back to Dashboard"
+            ) }}
+
+        </a>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     LANGUAGE SCRIPT
+===================================================== -->
+
+<script>
+
+function changeLanguage(language) {
+
+    window.location.href =
+        "/set-language/" + language;
+
+}
+
+</script>
+
+
+</body>
+
+</html>

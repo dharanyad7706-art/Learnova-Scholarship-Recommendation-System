@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ t["recommendations"] }} - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* =========================
+           RECOMMENDATION PAGE
+        ========================= */
+
+        .recommendation-page {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .page-description {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           ML BOX
+        ========================= */
+
+        .ml-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .ml-box h2 {
+            margin-top: 0;
+        }
+
+        .prediction {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           GRID
+        ========================= */
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .recommendation-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border: 1px solid #e5e5e5;
+        }
+
+        .recommendation-card h2 {
+            margin-top: 0;
+            font-size: 21px;
+        }
+
+        .recommendation-card p {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           MATCH SCORE
+        ========================= */
+
+        .score-text {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .score-background {
+            width: 100%;
+            height: 14px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .score-bar {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .recommendation-buttons {
+            margin-top: 18px;
+        }
+
+        .recommendation-buttons a {
+            text-decoration: none;
+        }
+
+        .recommendation-buttons button {
+            margin: 4px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                {{ t["dashboard"] }}
+            </a>
+
+            <a href="/scholarships">
+                {{ t["scholarships"] }}
+            </a>
+
+            <a href="/eligibility">
+                {{ t["eligibility"] }}
+            </a>
+
+            <a href="/recommendations">
+                {{ t["recommendations"] }}
+            </a>
+
+            <a href="/profile">
+                {{ t["profile"] }}
+            </a>
+
+            <a href="/my-applications">
+                {{ t["my_applications"] }}
+            </a>
+
+            <a href="/chatbot">
+                {{ t["chatbot"] }}
+            </a>
+
+            <a href="/logout">
+                {{ t["logout"] }}
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
+
+    <div class="recommendation-page">
+
+        <h1 class="page-title">
+
+            🤖
+
+            {{ t["personalized_recommendations"]
+               if t.get("personalized_recommendations")
+               else "Personalized Scholarship Recommendations" }}
+
+        </h1>
+
+
+        <p class="page-description">
+
+            {{ t["recommendation_description"]
+               if t.get("recommendation_description")
+               else "Scholarships recommended based on your profile." }}
+
+        </p>
+
+
+        <!-- =========================
+             PROFILE MESSAGE
+        ========================= -->
+
+        {% if message %}
+
+            <div class="ml-box">
+
+                <h2>
+                    👤 Complete Your Profile
+                </h2>
+
+                <p>
+                    {{ message }}
+                </p>
+
+                <a href="/profile">
+
+                    <button type="button">
+                        Complete Profile
+                    </button>
+
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =========================
+                 ML PREDICTION
+            ========================= -->
+
+            <div class="ml-box">
+
+                <h2>
+                    🧠
+                    {{ t["ml_prediction"]
+                       if t.get("ml_prediction")
+                       else "ML Eligibility Prediction" }}
+                </h2>
+
+                <p>
+
+                    <strong>
+                        Academic Percentage:
+                    </strong>
+
+                    {{ percentage }}%
+
+                </p>
+
+                <p>
+
+                    <strong>
+                        Annual Family Income:
+                    </strong>
+
+                    ₹{{ income }}
+
+                </p>
+
+
+                {% if ml_prediction == 1 %}
+
+                    <p class="prediction">
+
+                        ✅ Prediction: Eligible
+
+                    </p>
+
+                {% else %}
+
+                    <p class="prediction">
+
+                        ❌ Prediction: Not Eligible
+
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =========================
+                 RECOMMENDATIONS
+            ========================= -->
+
+            {% if recommendations %}
+
+                <h2 style="text-align:center; margin-bottom:20px;">
+
+                    🎯
+                    {{ t["top_matching_scholarships"]
+                       if t.get("top_matching_scholarships")
+                       else "Top Matching Scholarships" }}
+
+                </h2>
+
+
+                <div class="recommendations-grid">
+
+
+                    {% for scholarship in recommendations %}
+
+                        <div class="recommendation-card">
+
+
+                            <h2>
+                                🎓
+                                {{ scholarship.name }}
+                            </h2>
+
+
+                            <p>
+
+                                <strong>
+                                    Category:
+                                </strong>
+
+                                {{ scholarship.category }}
+
+                            </p>
+
+
+                            <!-- MATCH SCORE -->
+
+                            <p class="score-text">
+
+                                🎯 Match Score:
+                                {{ scholarship.match }}%
+
+                            </p>
+
+
+                            <div class="score-background">
+
+                                <div
+                                    class="score-bar"
+                                    style="
+                                        width: {{ scholarship.match }}%;
+                                    "
+                                ></div>
+
+                            </div>
+
+
+                            <!-- DETAILS -->
+
+                            <p>
+
+                                <strong>
+                                    Description:
+                                </strong>
+
+                                {{ scholarship.description }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Eligibility:
+                                </strong>
+
+                                {{ scholarship.eligibility }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    Benefit:
+                                </strong>
+
+                                {{ scholarship.benefit }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    💰 Amount:
+                                </strong>
+
+                                {{ scholarship.amount }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    📅 Deadline:
+                                </strong>
+
+                                {{ scholarship.deadline }}
+
+                            </p>
+
+
+                            <p>
+
+                                <strong>
+                                    💵 Application Fee:
+                                </strong>
+
+                                {{ scholarship.application_fee }}
+
+                            </p>
+
+
+                            <!-- REASONS -->
+
+                            <hr>
+
+                            <h3>
+                                ⭐ Why Recommended?
+                            </h3>
+
+
+                            {% if scholarship.reasons %}
+
+                                <ul>
+
+                                    {% for reason in scholarship.reasons %}
+
+                                        <li>
+                                            ✅ {{ reason }}
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                            {% else %}
+
+                                <p>
+                                    Your profile matches this scholarship.
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- BUTTONS -->
+
+                            <div class="recommendation-buttons">
+
+
+                                <a
+                                    href="/scholarship-details?scholarship={{ scholarship.name | urlencode }}"
+                                >
+
+                                    <button type="button">
+
+                                        📖 View Details
+
+                                    </button>
+
+                                </a>
+
+
+                                <a
+                                    href="/apply-scholarship?scholarship={{ scholarship.name | urlencode }}"
+                                >
+
+                                    <button type="button">
+
+                                        📝 Apply Now
+
+                                    </button>
+
+                                </a>
+
+
+                                {% if scholarship.is_saved %}
+
+                                    <button
+                                        type="button"
+                                        disabled
+                                        style="
+                                            background:#4CAF50;
+                                            color:white;
+                                        "
+                                    >
+
+                                        ✓ Saved
+
+                                    </button>
+
+                                {% else %}
+
+                                    <a
+                                        href="/bookmark/{{ scholarship.name | urlencode }}"
+                                    >
+
+                                        <button type="button">
+
+                                            🔖 Save
+
+                                        </button>
+
+                                    </a>
+
+                                {% endif %}
+
+
+                                {% if scholarship.official_link %}
+
+                                    <a
+                                        href="{{ scholarship.official_link }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+
+                                        <button type="button">
+
+                                            🌐 Official Website
+
+                                        </button>
+
+                                    </a>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                        </div>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- NO RECOMMENDATIONS -->
+
+                <div class="ml-box">
+
+                    <h2>
+                        📭 No Matching Scholarships
+                    </h2>
+
+                    <p>
+                        No scholarships currently match your profile.
+                    </p>
+
+                    <a href="/scholarships">
+
+                        <button type="button">
+                            🎓 Browse All Scholarships
+                        </button>
+
+                    </a>
+
+                </div>
+
+
+            {% endif %}
+
+
+        {% endif %}
+
+    </div>
+
+
+</body>
+
+</html>

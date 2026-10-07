@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+    </nav>
+
+
+    <section class="dashboard">
+
+        <div class="feature-card">
+
+            <h1>🔐 Admin Login</h1>
+
+            <p>
+                Login to manage scholarship applications.
+            </p>
+
+
+            <form method="POST">
+
+                <label>
+                    Admin Email
+                </label>
+
+                <br>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter admin email"
+                    required
+                >
+
+                <br><br>
+
+
+                <label>
+                    Admin Password
+                </label>
+
+                <br>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter admin password"
+                    required
+                >
+
+                <br><br>
+
+
+                <button type="submit">
+                    Login as Admin
+                </button>
+
+            </form>
+
+            <br>
+
+            <a href="/login">
+                Back to Student Login
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
+

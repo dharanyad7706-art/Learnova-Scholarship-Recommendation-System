@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ t["saved_scholarships"] }} - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .language-select {
+            padding: 7px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-left: 15px;
+        }
+
+        .saved-description {
+            margin-bottom: 25px;
+        }
+
+        .saved-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        .saved-card h2 {
+            margin-bottom: 12px;
+        }
+
+        .saved-card p {
+            margin-bottom: 18px;
+        }
+
+        .empty-saved {
+            text-align: center;
+            padding: 35px;
+        }
+
+        .empty-saved h2 {
+            margin-bottom: 15px;
+        }
+
+        .empty-saved p {
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                {{ t["dashboard"] }}
+            </a>
+
+            <a href="/scholarships">
+                {{ t["scholarships"] }}
+            </a>
+
+            <a href="/saved-scholarships">
+                {{ t["saved"] }}
+            </a>
+
+            <a href="/profile">
+                {{ t["profile"] }}
+            </a>
+
+            <a href="/logout">
+                {{ t["logout"] }}
+            </a>
+
+
+            <!-- Language Selector -->
+
+            <select
+                class="language-select"
+                onchange="changeLanguage(this.value)"
+            >
+
+                <option
+                    value="en"
+                    {% if current_language == "en" %}
+                    selected
+                    {% endif %}
+                >
+                    English
+                </option>
+
+
+                <option
+                    value="ta"
+                    {% if current_language == "ta" %}
+                    selected
+                    {% endif %}
+                >
+                    தமிழ்
+                </option>
+
+
+                <option
+                    value="hi"
+                    {% if current_language == "hi" %}
+                    selected
+                    {% endif %}
+                >
+                    हिन्दी
+                </option>
+
+            </select>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         SAVED SCHOLARSHIPS
+    ====================================================== -->
+
+    <section class="scholarship-page">
+
+
+        <h1>
+
+            📌 {{ t["saved_scholarships"] }}
+
+        </h1>
+
+
+        <p class="saved-description">
+
+            {{ t["saved_scholarships_description"] }}
+
+        </p>
+
+
+        <!-- =================================================
+             SAVED SCHOLARSHIPS EXIST
+        ================================================== -->
+
+        {% if bookmarks %}
+
+            <div class="scholarship-container">
+
+
+                {% for bookmark in bookmarks %}
+
+                    <div class="saved-card">
+
+
+                        <h2>
+
+                            🎓 {{ bookmark[1] }}
+
+                        </h2>
+
+
+                        <p>
+
+                            {{ t["saved_for_later"] }}
+
+                        </p>
+
+
+                    </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+        <!-- =================================================
+             NO SAVED SCHOLARSHIPS
+        ================================================== -->
+
+        {% else %}
+
+
+            <div class="feature-card empty-saved">
+
+
+                <h2>
+
+                    {{ t["no_saved_scholarships"] }}
+
+                </h2>
+
+
+                <p>
+
+                    {{ t["save_scholarships_message"] }}
+
+                </p>
+
+
+                <a href="/scholarships">
+
+                    <button type="button">
+
+                        {{ t["browse_scholarships"] }}
+
+                    </button>
+
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+    <!-- =====================================================
+         LANGUAGE SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        function changeLanguage(language) {
+
+            window.location.href =
+                "/set-language/" + language;
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

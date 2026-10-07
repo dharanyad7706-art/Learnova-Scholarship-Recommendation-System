@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/eligibility">
+                Eligibility
+            </a>
+
+            <a href="/recommendations">
+                Recommendations
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/saved-scholarships">
+                Saved
+            </a>
+
+            <a href="/my-applications">
+                My Applications
+            </a>
+
+            <a href="/notifications">
+                🔔 Notifications
+            </a>
+
+            <a href="/chatbot">
+                Chatbot
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- NOTIFICATIONS PAGE -->
+
+    <section class="dashboard">
+
+        <h1>
+            🔔 Notifications
+        </h1>
+
+        <p>
+            View your scholarship application
+            notifications and updates.
+        </p>
+
+
+        {% if notifications %}
+
+            <div class="feature-container">
+
+                {% for notification in notifications %}
+
+                    <div class="feature-card">
+
+                        <h3>
+                            🔔 Notification
+                        </h3>
+
+                        <p>
+                            {{ notification["message"] }}
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="feature-card">
+
+                <h3>
+                    🔔 No Notifications
+                </h3>
+
+                <p>
+                    You currently have no notifications.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <div style="
+            margin-top: 40px;
+            text-align: center;
+        ">
+
+            <a href="/dashboard">
+
+                <button type="button">
+                    ← Back to Dashboard
+                </button>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,382 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Edit Scholarship - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA ADMIN
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/applications">
+                Applications
+            </a>
+
+            <a href="/admin/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Main Section -->
+
+    <section class="dashboard">
+
+
+        <div class="feature-card"
+             style="
+                max-width: 700px;
+                margin: 30px auto;
+             ">
+
+
+            <h1>
+                ✏️ Edit Scholarship
+            </h1>
+
+
+            <p>
+                Update the scholarship information below.
+            </p>
+
+
+            <form
+                method="POST"
+                action="/admin/scholarship/edit/{{ scholarship[0] }}"
+            >
+
+
+                <!-- Scholarship Name -->
+
+                <label>
+                    <strong>
+                        Scholarship Name
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ scholarship[1] }}"
+                    placeholder="Scholarship Name"
+                    required
+                >
+
+                <br><br>
+
+
+                <!-- Category -->
+
+                <label>
+                    <strong>
+                        Category
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="category"
+                    value="{{ scholarship[2] }}"
+                    placeholder="Category"
+                    required
+                >
+
+                <br><br>
+
+
+                <!-- Description -->
+
+                <label>
+                    <strong>
+                        Description
+                    </strong>
+                </label>
+
+                <br>
+
+                <textarea
+                    name="description"
+                    rows="4"
+                    placeholder="Description"
+                    required
+                >{{ scholarship[3] }}</textarea>
+
+                <br><br>
+
+
+                <!-- Eligibility -->
+
+                <label>
+                    <strong>
+                        Eligibility
+                    </strong>
+                </label>
+
+                <br>
+
+                <textarea
+                    name="eligibility"
+                    rows="4"
+                    placeholder="Eligibility"
+                    required
+                >{{ scholarship[4] }}</textarea>
+
+                <br><br>
+
+
+                <!-- Benefit -->
+
+                <label>
+                    <strong>
+                        Benefit
+                    </strong>
+                </label>
+
+                <br>
+
+                <textarea
+                    name="benefit"
+                    rows="4"
+                    placeholder="Benefit"
+                    required
+                >{{ scholarship[5] }}</textarea>
+
+                <br><br>
+
+
+                <!-- Official Website -->
+
+                <label>
+                    <strong>
+                        Official Website
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="url"
+                    name="official_link"
+                    value="{{ scholarship[6] }}"
+                    placeholder="https://..."
+                >
+
+                <br><br>
+
+
+                <!-- Amount -->
+
+                <label>
+                    <strong>
+                        💰 Scholarship Amount
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="amount"
+                    value="{{ scholarship[7] }}"
+                    placeholder="Example: ₹50,000 per year"
+                >
+
+                <br><br>
+
+
+                <!-- Deadline -->
+
+                <label>
+                    <strong>
+                        📅 Application Deadline
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="deadline"
+                    value="{{ scholarship[8] }}"
+                    placeholder="Example: 31 October 2026"
+                >
+
+                <br><br>
+
+
+                <!-- Application Fee -->
+
+                <label>
+                    <strong>
+                        💵 Application Fee
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="application_fee"
+                    value="{{ scholarship[9] }}"
+                    placeholder="Example: No fee"
+                >
+
+                <br><br>
+
+
+                <!-- Minimum Percentage -->
+
+                <label>
+                    <strong>
+                        Minimum Percentage
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="number"
+                    name="minimum_percentage"
+                    value="{{ scholarship[10] }}"
+                    step="0.01"
+                    min="0"
+                    max="100"
+                    placeholder="Example: 60"
+                >
+
+                <br><br>
+
+
+                <!-- Maximum Income -->
+
+                <label>
+                    <strong>
+                        Maximum Family Income
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="number"
+                    name="maximum_income"
+                    value="{{ scholarship[11] }}"
+                    step="0.01"
+                    min="0"
+                    placeholder="Example: 500000"
+                >
+
+                <br><br>
+
+
+                <!-- Eligible Course -->
+
+                <label>
+                    <strong>
+                        Eligible Course
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="eligible_course"
+                    value="{{ scholarship[12] }}"
+                    placeholder="Example: UG / Engineering / All"
+                >
+
+                <br><br>
+
+
+                <!-- Eligible Year -->
+
+                <label>
+                    <strong>
+                        Eligible Year
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="eligible_year"
+                    value="{{ scholarship[13] }}"
+                    placeholder="Example: All / 1st / 2nd / 3rd"
+                >
+
+                <br><br>
+
+
+                <!-- Update -->
+
+                <button type="submit">
+                    💾 Update Scholarship
+                </button>
+
+
+            </form>
+
+
+            <br>
+
+
+            <!-- Back -->
+
+            <a href="/admin/scholarships">
+
+                <button type="button">
+                    ← Back to Scholarships
+                </button>
+
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+</body>
+
+</html>
+```

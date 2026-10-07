@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ scholarship["name"] }} - Learnova
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .details-page {
+
+            max-width: 900px;
+
+            margin: 40px auto;
+
+            padding: 20px;
+
+        }
+
+        .details-card {
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 3px 15px rgba(0,0,0,0.10);
+
+        }
+
+        .details-card h1 {
+
+            color: #21479b;
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+        }
+
+        .category {
+
+            text-align: center;
+
+            margin-bottom: 25px;
+
+        }
+
+        .category span {
+
+            display: inline-block;
+
+            padding: 8px 15px;
+
+            border-radius: 20px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+        }
+
+        .details-section {
+
+            margin-top: 25px;
+
+            padding-bottom: 15px;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+        .details-section h3 {
+
+            margin-bottom: 8px;
+
+            color: #333;
+
+        }
+
+        .details-section p {
+
+            line-height: 1.7;
+
+        }
+
+        .details-button {
+
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            margin: 8px;
+
+            border-radius: 8px;
+
+            background: #4CAF50;
+
+            color: white;
+
+            text-decoration: none;
+
+            border: none;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+        }
+
+        .details-button:hover {
+
+            background: #388E3C;
+
+        }
+
+        /* SAVE SCHOLARSHIP BUTTON */
+
+        .save-button {
+
+            background: #f59e0b;
+
+        }
+
+        .save-button:hover {
+
+            background: #d97706;
+
+        }
+
+        /* BACK BUTTON */
+
+        .back-button {
+
+            background: #777;
+
+        }
+
+        .back-button:hover {
+
+            background: #555;
+
+        }
+
+        .action-area {
+
+            text-align: center;
+
+            margin-top: 30px;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION BAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a
+            href="/dashboard"
+            class="logo"
+        >
+            Learnova
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">
+                Dashboard
+            </a>
+
+            <a href="/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/eligibility">
+                Eligibility
+            </a>
+
+            <a href="/recommendations">
+                Recommendations
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/saved-scholarships">
+                Saved
+            </a>
+
+            <a href="/my-applications">
+                My Applications
+            </a>
+
+            <a href="/notifications">
+                Notifications
+            </a>
+
+            <a href="/chatbot">
+                Chatbot
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     SCHOLARSHIP DETAILS PAGE
+===================================================== -->
+
+<div class="details-page">
+
+
+    <div class="details-card">
+
+
+        <!-- SCHOLARSHIP NAME -->
+
+        <h1>
+
+            🎓 {{ scholarship["name"] }}
+
+        </h1>
+
+
+        <!-- CATEGORY -->
+
+        {% if scholarship["category"] %}
+
+            <div class="category">
+
+                <span>
+
+                    {{ scholarship["category"] }}
+
+                </span>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="details-section">
+
+            <h3>
+                📝 Description
+            </h3>
+
+            <p>
+
+                {{ scholarship["description"] or "Not specified" }}
+
+            </p>
+
+        </div>
+
+
+        <!-- ELIGIBILITY -->
+
+        <div class="details-section">
+
+            <h3>
+                ✅ Eligibility Requirements
+            </h3>
+
+            <p>
+
+                {{ scholarship["eligibility"] or "Not specified" }}
+
+            </p>
+
+        </div>
+
+
+        <!-- BENEFIT -->
+
+        <div class="details-section">
+
+            <h3>
+                🎁 Benefit
+            </h3>
+
+            <p>
+
+                {{ scholarship["benefit"] or "Not specified" }}
+
+            </p>
+
+        </div>
+
+
+        <!-- AMOUNT -->
+
+        <div class="details-section">
+
+            <h3>
+                💰 Amount
+            </h3>
+
+            <p>
+
+                {% if scholarship["amount"] is not none %}
+
+                    ₹{{ scholarship["amount"] }}
+
+                {% else %}
+
+                    Not specified
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- DEADLINE -->
+
+        <div class="details-section">
+
+            <h3>
+                📅 Deadline
+            </h3>
+
+            <p>
+
+                {{ scholarship["deadline"] or "Not specified" }}
+
+            </p>
+
+        </div>
+
+
+        <!-- APPLICATION FEE -->
+
+        <div class="details-section">
+
+            <h3>
+                💳 Application Fee
+            </h3>
+
+            <p>
+
+                {% if scholarship["application_fee"] is not none %}
+
+                    ₹{{ scholarship["application_fee"] }}
+
+                {% else %}
+
+                    Not specified
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- MINIMUM PERCENTAGE -->
+
+        <div class="details-section">
+
+            <h3>
+                📊 Minimum Percentage
+            </h3>
+
+            <p>
+
+                {% if scholarship["minimum_percentage"] is not none %}
+
+                    {{ scholarship["minimum_percentage"] }}%
+
+                {% else %}
+
+                    Not specified
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- MAXIMUM FAMILY INCOME -->
+
+        <div class="details-section">
+
+            <h3>
+                💵 Maximum Family Income
+            </h3>
+
+            <p>
+
+                {% if scholarship["maximum_income"] is not none %}
+
+                    ₹{{ scholarship["maximum_income"] }}
+
+                {% else %}
+
+                    Not specified
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+        <!-- ELIGIBLE COURSE -->
+
+        <div class="details-section">
+
+            <h3>
+                🎓 Eligible Course
+            </h3>
+
+            <p>
+
+                {{ scholarship["eligible_course"] or "All" }}
+
+            </p>
+
+        </div>
+
+
+        <!-- ELIGIBLE YEAR -->
+
+        <div class="details-section">
+
+            <h3>
+                📚 Eligible Year
+            </h3>
+
+            <p>
+
+                {{ scholarship["eligible_year"] or "All" }}
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             OFFICIAL WEBSITE
+        ================================================== -->
+
+        <div class="details-section">
+
+            <h3>
+                🌐 Official Website
+            </h3>
+
+
+            {% if scholarship["official_link"] %}
+
+                <a
+                    href="{{ scholarship['official_link'] }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="details-button"
+                >
+
+                    🌐 Apply on Official Website
+
+                </a>
+
+            {% else %}
+
+                <p>
+
+                    Official application link is not available.
+
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             ACTION BUTTONS
+        ================================================== -->
+
+        <div class="action-area">
+
+
+            <!-- SAVE SCHOLARSHIP -->
+
+            <a
+                href="{{ url_for(
+                    'bookmark',
+                    scholarship_name=scholarship['name']
+                ) }}"
+                class="details-button save-button"
+            >
+
+                🔖 Save Scholarship
+
+            </a>
+
+
+            <!-- I HAVE APPLIED -->
+
+            <a
+                href="/mark-applied/{{ scholarship['id'] }}"
+                class="details-button"
+            >
+
+                ✓ I Have Applied
+
+            </a>
+
+
+            <!-- BACK TO SCHOLARSHIPS -->
+
+            <a
+                href="/scholarships"
+                class="details-button back-button"
+            >
+
+                ← Back to Scholarships
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ t["dashboard"] }} - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        /* ================================
+           DASHBOARD
+        ================================= */
+
+        .dashboard-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome-section h1 {
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            font-size: 16px;
+        }
+
+        /* ================================
+           FEATURE CARDS
+        ================================= */
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-card h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            line-height: 1.6;
+        }
+
+        .feature-count {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* ================================
+           BUTTON
+        ================================= */
+
+        .dashboard-button {
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .dashboard-button button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* ================================
+           DEADLINES
+        ================================= */
+
+        .deadline-section {
+            margin-top: 30px;
+        }
+
+        .deadline-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .deadline-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .deadline-item:last-child {
+            border-bottom: none;
+        }
+
+        .deadline-name {
+            font-weight: bold;
+        }
+
+        .deadline-days {
+            font-weight: bold;
+        }
+
+        /* ================================
+           QUICK ACTIONS
+        ================================= */
+
+        .quick-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .quick-actions h2 {
+            margin-bottom: 20px;
+        }
+
+        .quick-action-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .quick-action-buttons a {
+            text-decoration: none;
+        }
+
+        .quick-action-buttons button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 800px) {
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        LEARNOVA
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            {{ t["dashboard"] }}
+        </a>
+
+        <a href="/scholarships">
+            {{ t["scholarships"] }}
+        </a>
+
+        <a href="/eligibility">
+            {{ t["eligibility"] }}
+        </a>
+
+        <a href="/recommendations">
+            {{ t["recommendations"] }}
+        </a>
+
+        <a href="/profile">
+            {{ t["profile"] }}
+        </a>
+
+        <a href="/saved-scholarships">
+            {{ t["saved"] }}
+        </a>
+
+        <a href="/my-applications">
+            {{ t["my_applications"] }}
+        </a>
+
+        <a href="/notifications">
+            {{ t["notifications"] }}
+        </a>
+
+        <a href="/chatbot">
+            {{ t["chatbot"] }}
+        </a>
+
+        <a href="/logout">
+            {{ t["logout"] }}
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================
+     DASHBOARD CONTAINER
+========================================= -->
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================
+         WELCOME
+    ====================================== -->
+
+    <div class="welcome-section">
+
+        <h1>
+
+            {{ t["welcome"] }}
+
+        </h1>
+
+        <p>
+
+            {{ t["hello"] }},
+            {{ name or "Student" }}!
+
+        </p>
+
+        <p>
+
+            {{ t["dashboard_description"] }}
+
+        </p>
+
+    </div>
+
+
+    <!-- =====================================
+         FEATURE CARDS
+    ====================================== -->
+
+    <div class="feature-grid">
+
+
+        <!-- =================================
+             SCHOLARSHIPS
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                🎓
+                {{ t["scholarships"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["scholarships_description"] }}
+
+            </p>
+
+            <p class="feature-count">
+
+                🎓 Total Scholarships:
+                <strong>
+                    {{ total_scholarships }}
+                </strong>
+
+            </p>
+
+            <a href="/scholarships"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["view_scholarships"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             ELIGIBILITY
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                ✅
+                {{ t["eligibility"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["eligibility_description"] }}
+
+            </p>
+
+            <a href="/eligibility"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["check_eligibility"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             RECOMMENDATIONS
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                🎯
+                {{ t["recommendations"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["recommendations_description"] }}
+
+            </p>
+
+            <p class="feature-count">
+
+                🎯 Matching Scholarships:
+                <strong>
+                    {{ recommended_count }}
+                </strong>
+
+            </p>
+
+            <a href="/recommendations"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["get_recommendations"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             PROFILE
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                👤
+                {{ t["profile"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["profile_description"] }}
+
+            </p>
+
+            <a href="/profile"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["view_profile"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             SAVED SCHOLARSHIPS
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                🔖
+                {{ t["saved"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["saved_description"] }}
+
+            </p>
+
+            <p class="feature-count">
+
+                🔖 Saved Scholarships:
+                <strong>
+                    {{ saved_count }}
+                </strong>
+
+            </p>
+
+            <a href="/saved-scholarships"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["view_saved"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             APPLICATIONS
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                📝
+                {{ t["my_applications"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["applications_description"] }}
+
+            </p>
+
+            <p class="feature-count">
+
+                📝 Applications:
+                <strong>
+                    {{ applications_count }}
+                </strong>
+
+            </p>
+
+            <a href="/my-applications"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["track_applications"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             NOTIFICATIONS
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                🔔
+                {{ t["notifications"] }}
+
+            </h2>
+
+            {% if unread_notifications
+                  and unread_notifications > 0 %}
+
+                <p>
+
+                    {{ t["you_have"] }}
+
+                    <strong>
+                        {{ unread_notifications }}
+                    </strong>
+
+                    {{ t["new_notifications"] }}
+
+                </p>
+
+                <p class="feature-count">
+
+                    🔔 Unread:
+                    <strong>
+                        {{ unread_notifications }}
+                    </strong>
+
+                </p>
+
+            {% else %}
+
+                <p>
+
+                    {{ t["no_new_notifications"] }}
+
+                </p>
+
+                <p class="feature-count">
+
+                    🔔 Unread:
+                    <strong>0</strong>
+
+                </p>
+
+            {% endif %}
+
+            <a href="/notifications"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["view_notifications"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================
+             CHATBOT
+        ================================== -->
+
+        <div class="feature-card">
+
+            <h2>
+
+                🤖
+                {{ t["chatbot"] }}
+
+            </h2>
+
+            <p>
+
+                {{ t["chatbot_description"] }}
+
+            </p>
+
+            <a href="/chatbot"
+               class="dashboard-button">
+
+                <button type="button">
+
+                    {{ t["open_chatbot"] }}
+
+                </button>
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================================
+         UPCOMING DEADLINES
+    ========================================= -->
+
+    <div class="deadline-section">
+
+        <div class="deadline-card">
+
+            <h2>
+
+                📅 Upcoming Scholarship Deadlines
+
+            </h2>
+
+
+            {% if upcoming_deadlines %}
+
+                {% for scholarship in upcoming_deadlines %}
+
+                    <div class="deadline-item">
+
+                        <div class="deadline-name">
+
+                            🎓
+                            {{ scholarship["name"] }}
+
+                        </div>
+
+                        <div>
+
+                            📅 Deadline:
+
+                            {{ scholarship["deadline"] }}
+
+                        </div>
+
+                        <div class="deadline-days">
+
+                            {% if scholarship["days_remaining"] == 0 %}
+
+                                🔴 Deadline is today!
+
+                            {% elif scholarship["days_remaining"] == 1 %}
+
+                                🟠 1 day remaining
+
+                            {% elif scholarship["days_remaining"] <= 3 %}
+
+                                🟠
+                                {{ scholarship["days_remaining"] }}
+                                days remaining
+
+                            {% else %}
+
+                                🟢
+                                {{ scholarship["days_remaining"] }}
+                                days remaining
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+
+                    No upcoming scholarship deadlines.
+
+                </p>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         QUICK ACTIONS
+    ========================================= -->
+
+    <div class="quick-actions">
+
+        <h2>
+
+            ⚡
+            {{ t["quick_actions"] }}
+
+        </h2>
+
+
+        <div class="quick-action-buttons">
+
+
+            <a href="/scholarships">
+
+                <button type="button">
+
+                    🎓
+                    {{ t["find_scholarships"] }}
+
+                </button>
+
+            </a>
+
+
+            <a href="/recommendations">
+
+                <button type="button">
+
+                    🎯
+                    {{ t["recommendations"] }}
+
+                </button>
+
+            </a>
+
+
+            <a href="/eligibility">
+
+                <button type="button">
+
+                    ✅
+                    {{ t["check_eligibility"] }}
+
+                </button>
+
+            </a>
+
+
+            <a href="/profile">
+
+                <button type="button">
+
+                    👤
+                    {{ t["profile"] }}
+
+                </button>
+
+            </a>
+
+
+            <a href="/saved-scholarships">
+
+                <button type="button">
+
+                    🔖
+                    {{ t["saved"] }}
+
+                </button>
+
+            </a>
+
+
+            <a href="/my-applications">
+
+                <button type="button">
+
+                    📝
+                    {{ t["my_applications"] }}
+
+                </button>
+
+            </a>
+
+
+            <a href="/chatbot">
+
+                <button type="button">
+
+                    🤖
+                    {{ t["ask_chatbot"] }}
+
+                </button>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

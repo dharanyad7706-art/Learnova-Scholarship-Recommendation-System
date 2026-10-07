@@ -1,0 +1,425 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Manage Scholarships - Learnova Admin
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA ADMIN
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/applications">
+                Applications
+            </a>
+
+            <a href="/admin/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN SECTION -->
+    <!-- ================================================= -->
+
+    <section class="dashboard">
+
+
+        <h1>
+            🎓 Manage Scholarships
+        </h1>
+
+
+        <p>
+            Add, edit and manage scholarships available
+            in the Learnova platform.
+        </p>
+
+
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- ADD BUTTON -->
+        <!-- ================================================= -->
+
+        <a href="/admin/scholarship/add">
+
+            <button type="button">
+                ➕ Add New Scholarship
+            </button>
+
+        </a>
+
+
+        <br>
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- SCHOLARSHIP LIST -->
+        <!-- ================================================= -->
+
+        <div class="feature-container">
+
+
+            {% if scholarships %}
+
+
+                {% for scholarship in scholarships %}
+
+
+                    <div class="feature-card">
+
+
+                        <!-- Scholarship Name -->
+
+                        <h2>
+                            🎓 {{ scholarship[1] }}
+                        </h2>
+
+
+                        <!-- Category -->
+
+                        <p>
+
+                            <strong>
+                                Category:
+                            </strong>
+
+                            {{ scholarship[2] }}
+
+                        </p>
+
+
+                        <!-- Description -->
+
+                        <p>
+
+                            <strong>
+                                Description:
+                            </strong>
+
+                            {{ scholarship[3] }}
+
+                        </p>
+
+
+                        <!-- Eligibility -->
+
+                        <p>
+
+                            <strong>
+                                Eligibility:
+                            </strong>
+
+                            {{ scholarship[4] }}
+
+                        </p>
+
+
+                        <!-- Benefit -->
+
+                        <p>
+
+                            <strong>
+                                Benefit:
+                            </strong>
+
+                            {{ scholarship[5] }}
+
+                        </p>
+
+
+                        <!-- Amount -->
+
+                        {% if scholarship|length > 7 %}
+
+                            <p>
+
+                                <strong>
+                                    💰 Scholarship Amount:
+                                </strong>
+
+                                {{ scholarship[7] or "Not specified" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Deadline -->
+
+                        {% if scholarship|length > 8 %}
+
+                            <p>
+
+                                <strong>
+                                    📅 Application Deadline:
+                                </strong>
+
+                                {{ scholarship[8] or "Not specified" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Application Fee -->
+
+                        {% if scholarship|length > 9 %}
+
+                            <p>
+
+                                <strong>
+                                    💵 Application Fee:
+                                </strong>
+
+                                {{ scholarship[9] or "Not specified" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Minimum Percentage -->
+
+                        {% if scholarship|length > 10 %}
+
+                            <p>
+
+                                <strong>
+                                    📊 Minimum Percentage:
+                                </strong>
+
+                                {{ scholarship[10] or "Not specified" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Maximum Income -->
+
+                        {% if scholarship|length > 11 %}
+
+                            <p>
+
+                                <strong>
+                                    💰 Maximum Family Income:
+                                </strong>
+
+                                {{ scholarship[11] or "Not specified" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Eligible Course -->
+
+                        {% if scholarship|length > 12 %}
+
+                            <p>
+
+                                <strong>
+                                    📚 Eligible Course:
+                                </strong>
+
+                                {{ scholarship[12] or "All" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Eligible Year -->
+
+                        {% if scholarship|length > 13 %}
+
+                            <p>
+
+                                <strong>
+                                    🎓 Eligible Year:
+                                </strong>
+
+                                {{ scholarship[13] or "All" }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- Official Website -->
+
+                        {% if scholarship[6] %}
+
+                            <p>
+
+                                <strong>
+                                    🌐 Official Website:
+                                </strong>
+
+                                <a
+                                    href="{{ scholarship[6] }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Visit Website
+                                </a>
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <hr>
+
+
+                        <!-- ================================================= -->
+                        <!-- ACTION BUTTONS -->
+                        <!-- ================================================= -->
+
+
+                        <!-- VIEW DETAILS -->
+
+                        <a
+                            href="/scholarship-details?scholarship={{ scholarship[1] | urlencode }}"
+                        >
+
+                            <button type="button">
+                                📖 View
+                            </button>
+
+                        </a>
+
+
+                        <!-- EDIT -->
+
+                        <a
+                            href="/admin/scholarship/edit/{{ scholarship[0] }}"
+                        >
+
+                            <button type="button">
+                                ✏️ Edit
+                            </button>
+
+                        </a>
+
+
+                        <!-- DELETE -->
+
+                        <a
+                            href="/admin/scholarship/delete/{{ scholarship[0] }}"
+                        >
+
+                            <button type="button">
+                                🗑️ Delete
+                            </button>
+
+                        </a>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            {% else %}
+
+
+                <!-- NO SCHOLARSHIPS -->
+
+                <div class="feature-card">
+
+
+                    <h2>
+                        📭 No Scholarships Found
+                    </h2>
+
+
+                    <p>
+                        There are currently no scholarships
+                        in the Learnova database.
+                    </p>
+
+
+                    <a href="/admin/scholarship/add">
+
+                        <button type="button">
+                            ➕ Add First Scholarship
+                        </button>
+
+                    </a>
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </div>
+
+
+        <br>
+        <br>
+
+
+        <!-- BACK TO ADMIN DASHBOARD -->
+
+        <a href="/admin-dashboard">
+
+            <button type="button">
+                ← Back to Admin Dashboard
+            </button>
+
+        </a>
+
+
+    </section>
+
+
+</body>
+
+</html>
+```

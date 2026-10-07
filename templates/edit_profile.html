@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="/scholarships">Scholarships</a>
+
+            <a href="/saved-scholarships">Saved</a>
+
+            <a href="/profile">Profile</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Edit Profile -->
+
+    <section class="dashboard">
+
+        <h1>✏️ Edit Profile</h1>
+
+        <p>
+            Update your scholarship application details.
+        </p>
+
+
+        <div class="login-card">
+
+            <form action="/profile/edit"
+                  method="POST">
+
+
+                <!-- Personal Details -->
+
+                <h2>👤 Personal Details</h2>
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ profile[1] if profile else '' }}"
+                    required>
+
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ profile[2] if profile else '' }}"
+                    required>
+
+
+                <label>Mobile Number</label>
+
+                <input
+                    type="tel"
+                    name="mobile"
+                    value="{{ profile[3] if profile else '' }}"
+                    required>
+
+
+                <label>Date of Birth</label>
+
+                <input
+                    type="date"
+                    name="dob"
+                    value="{{ profile[4] if profile else '' }}"
+                    required>
+
+
+                <label>Gender</label>
+
+                <select name="gender" required>
+
+                    <option value="">
+                        Select Gender
+                    </option>
+
+                    <option value="Male"
+                        {% if profile and profile[5] == "Male" %}
+                        selected
+                        {% endif %}>
+                        Male
+                    </option>
+
+                    <option value="Female"
+                        {% if profile and profile[5] == "Female" %}
+                        selected
+                        {% endif %}>
+                        Female
+                    </option>
+
+                    <option value="Other"
+                        {% if profile and profile[5] == "Other" %}
+                        selected
+                        {% endif %}>
+                        Other
+                    </option>
+
+                </select>
+
+
+                <br>
+
+
+                <!-- Education -->
+
+                <h2>🎓 Education Details</h2>
+
+                <label>College Name</label>
+
+                <input
+                    type="text"
+                    name="college"
+                    value="{{ profile[6] if profile else '' }}"
+                    required>
+
+
+                <label>Course</label>
+
+                <input
+                    type="text"
+                    name="course"
+                    value="{{ profile[7] if profile else '' }}"
+                    required>
+
+
+                <label>Department</label>
+
+                <input
+                    type="text"
+                    name="department"
+                    value="{{ profile[8] if profile else '' }}"
+                    required>
+
+
+                <label>Year of Study</label>
+
+                <select name="year" required>
+
+                    <option value="">
+                        Select Year
+                    </option>
+
+                    <option value="1"
+                        {% if profile and profile[9] == "1" %}
+                        selected
+                        {% endif %}>
+                        1st Year
+                    </option>
+
+                    <option value="2"
+                        {% if profile and profile[9] == "2" %}
+                        selected
+                        {% endif %}>
+                        2nd Year
+                    </option>
+
+                    <option value="3"
+                        {% if profile and profile[9] == "3" %}
+                        selected
+                        {% endif %}>
+                        3rd Year
+                    </option>
+
+                    <option value="4"
+                        {% if profile and profile[9] == "4" %}
+                        selected
+                        {% endif %}>
+                        4th Year
+                    </option>
+
+                </select>
+
+
+                <label>Academic Percentage</label>
+
+                <input
+                    type="number"
+                    name="percentage"
+                    value="{{ profile[10] if profile else '' }}"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                    required>
+
+
+                <br>
+
+
+                <!-- Financial -->
+
+                <h2>💰 Financial Details</h2>
+
+                <label>Annual Family Income</label>
+
+                <input
+                    type="number"
+                    name="income"
+                    value="{{ profile[11] if profile else '' }}"
+                    min="0"
+                    required>
+
+
+                <br>
+
+
+                <button type="submit">
+                    💾 Update Profile
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+        <br>
+
+
+        <a href="/profile">
+
+            <button>
+                ← Back to Profile
+            </button>
+
+        </a>
+
+    </section>
+
+</body>
+
+</html>

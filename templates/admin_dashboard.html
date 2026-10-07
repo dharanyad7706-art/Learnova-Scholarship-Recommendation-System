@@ -1,0 +1,284 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Admin Dashboard - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+    <!-- ================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ================================================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA ADMIN
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/applications">
+                Applications
+            </a>
+
+            <a href="/admin/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
+
+    <section class="dashboard">
+
+        <h1>
+            🛠️ Learnova Admin Dashboard
+        </h1>
+
+        <p>
+            Manage scholarships and student applications.
+        </p>
+
+
+        <!-- ================================================= -->
+        <!-- STATISTICS -->
+        <!-- ================================================= -->
+
+        <div class="feature-container">
+
+
+            <!-- Total Applications -->
+
+            <div class="feature-card">
+
+                <h2>
+                    📋 Total Applications
+                </h2>
+
+                <h1>
+                    {{ total_applications }}
+                </h1>
+
+            </div>
+
+
+            <!-- Submitted -->
+
+            <div class="feature-card">
+
+                <h2>
+                    📤 Submitted
+                </h2>
+
+                <h1>
+                    {{ submitted }}
+                </h1>
+
+            </div>
+
+
+            <!-- Under Review -->
+
+            <div class="feature-card">
+
+                <h2>
+                    🔍 Under Review
+                </h2>
+
+                <h1>
+                    {{ under_review }}
+                </h1>
+
+            </div>
+
+
+            <!-- Approved -->
+
+            <div class="feature-card">
+
+                <h2>
+                    ✅ Approved
+                </h2>
+
+                <h1>
+                    {{ approved }}
+                </h1>
+
+            </div>
+
+
+            <!-- Rejected -->
+
+            <div class="feature-card">
+
+                <h2>
+                    ❌ Rejected
+                </h2>
+
+                <h1>
+                    {{ rejected }}
+                </h1>
+
+            </div>
+
+
+            <!-- Scholarship Count -->
+
+            <div class="feature-card">
+
+                <h2>
+                    🎓 Scholarships
+                </h2>
+
+                <h1>
+                    {{ scholarship_count }}
+                </h1>
+
+            </div>
+
+
+        </div>
+
+
+        <br>
+        <br>
+
+
+        <!-- ================================================= -->
+        <!-- QUICK ACTIONS -->
+        <!-- ================================================= -->
+
+        <h2>
+            ⚡ Quick Actions
+        </h2>
+
+
+        <div class="feature-container">
+
+
+            <!-- Manage Applications -->
+
+            <div class="feature-card">
+
+                <h3>
+                    📋 Manage Applications
+                </h3>
+
+                <p>
+                    View student applications and
+                    update their status.
+                </p>
+
+                <a href="/admin/applications">
+
+                    <button type="button">
+                        Manage Applications
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Manage Scholarships -->
+
+            <div class="feature-card">
+
+                <h3>
+                    🎓 Manage Scholarships
+                </h3>
+
+                <p>
+                    Add, edit or delete scholarships
+                    from the Learnova database.
+                </p>
+
+                <a href="/admin/scholarships">
+
+                    <button type="button">
+                        Manage Scholarships
+                    </button>
+
+                </a>
+
+            </div>
+
+
+            <!-- Add Scholarship -->
+
+            <div class="feature-card">
+
+                <h3>
+                    ➕ Add Scholarship
+                </h3>
+
+                <p>
+                    Add a new scholarship directly
+                    from the admin panel.
+                </p>
+
+                <a href="/admin/scholarship/add">
+
+                    <button type="button">
+                        Add Scholarship
+                    </button>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <br>
+        <br>
+
+
+        <!-- Logout -->
+
+        <a href="/admin-logout">
+
+            <button type="button">
+                🚪 Logout
+            </button>
+
+        </a>
+
+
+    </section>
+
+
+</body>
+
+</html>
+```

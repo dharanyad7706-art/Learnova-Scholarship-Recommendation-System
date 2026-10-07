@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Scholarship Application - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">Dashboard</a>
+
+            <a href="/scholarships">Scholarships</a>
+
+            <a href="/profile">Profile</a>
+
+            <a href="/my-applications">My Applications</a>
+
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= APPLICATION SECTION ================= -->
+
+    <section class="dashboard">
+
+        <div class="feature-card">
+
+            <h1>📝 Scholarship Application</h1>
+
+            <h2>{{ scholarship_name }}</h2>
+
+            <p>
+                Enter your details and upload the required
+                documents to submit your application.
+            </p>
+
+
+            <!-- ================= ERROR MESSAGE ================= -->
+
+            {% if error %}
+
+                <div style="
+                    background: #fee2e2;
+                    color: #b91c1c;
+                    padding: 12px;
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+                    text-align: center;
+                    font-weight: bold;
+                ">
+
+                    {{ error }}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================= APPLICATION FORM ================= -->
+
+            <form action="/apply-scholarship"
+                  method="POST"
+                  enctype="multipart/form-data">
+
+
+                <!-- Hidden Scholarship Name -->
+
+                <input type="hidden"
+                       name="scholarship_name"
+                       value="{{ scholarship_name }}">
+
+
+                <!-- ================= PERSONAL DETAILS ================= -->
+
+                <h3>👤 Personal Details</h3>
+
+
+                <label>Full Name</label>
+
+                <input type="text"
+                       name="name"
+                       required>
+
+
+                <label>Email</label>
+
+                <input type="email"
+                       name="email"
+                       required>
+
+
+                <label>Mobile Number</label>
+
+                <input type="tel"
+                       name="mobile"
+                       required>
+
+
+                <!-- ================= ACADEMIC DETAILS ================= -->
+
+                <h3>🎓 Academic Details</h3>
+
+
+                <label>College Name</label>
+
+                <input type="text"
+                       name="college"
+                       required>
+
+
+                <label>Course</label>
+
+                <input type="text"
+                       name="course"
+                       required>
+
+
+                <label>Department</label>
+
+                <input type="text"
+                       name="department"
+                       required>
+
+
+                <label>Percentage</label>
+
+                <input type="number"
+                       name="percentage"
+                       min="0"
+                       max="100"
+                       step="0.01"
+                       required>
+
+
+                <label>Annual Family Income</label>
+
+                <input type="number"
+                       name="income"
+                       min="0"
+                       step="0.01"
+                       required>
+
+
+                <!-- ================= DOCUMENTS ================= -->
+
+                <h3>📄 Required Documents</h3>
+
+                <p>
+                    Upload the documents required for
+                    scholarship verification.
+                </p>
+
+
+                <label>Marksheet</label>
+
+                <input type="file"
+                       name="marksheet"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+
+                <label>Income Certificate</label>
+
+                <input type="file"
+                       name="income_certificate"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+
+                <label>Bonafide Certificate</label>
+
+                <input type="file"
+                       name="bonafide"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+
+                <label>College ID</label>
+
+                <input type="file"
+                       name="college_id"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+
+                <br>
+                <br>
+
+
+                <!-- ================= SUBMIT ================= -->
+
+                <button type="submit">
+                    ✅ Submit Application
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

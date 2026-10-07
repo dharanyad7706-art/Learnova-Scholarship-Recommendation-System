@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Add Scholarship - Learnova
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA ADMIN
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/applications">
+                Applications
+            </a>
+
+            <a href="/admin/scholarships">
+                Scholarships
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="dashboard">
+
+        <div class="feature-card"
+             style="max-width: 700px; margin: 30px auto;">
+
+            <h1>
+                ➕ Add New Scholarship
+            </h1>
+
+            <p>
+                Enter the scholarship details below.
+            </p>
+
+
+            <form
+                method="POST"
+                action="/admin/scholarship/add"
+            >
+
+                <!-- Name -->
+
+                <label>
+                    <strong>
+                        Scholarship Name
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter scholarship name"
+                    required
+                >
+
+                <br><br>
+
+
+                <!-- Category -->
+
+                <label>
+                    <strong>
+                        Category
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="category"
+                    placeholder="Example: AICTE, UGC, Government"
+                    required
+                >
+
+                <br><br>
+
+
+                <!-- Description -->
+
+                <label>
+                    <strong>
+                        Description
+                    </strong>
+                </label>
+
+                <br>
+
+                <textarea
+                    name="description"
+                    placeholder="Enter scholarship description"
+                    rows="4"
+                    required
+                ></textarea>
+
+                <br><br>
+
+
+                <!-- Eligibility -->
+
+                <label>
+                    <strong>
+                        Eligibility
+                    </strong>
+                </label>
+
+                <br>
+
+                <textarea
+                    name="eligibility"
+                    placeholder="Enter eligibility requirements"
+                    rows="4"
+                    required
+                ></textarea>
+
+                <br><br>
+
+
+                <!-- Benefit -->
+
+                <label>
+                    <strong>
+                        Benefit
+                    </strong>
+                </label>
+
+                <br>
+
+                <textarea
+                    name="benefit"
+                    placeholder="Enter scholarship benefit"
+                    rows="4"
+                    required
+                ></textarea>
+
+                <br><br>
+
+
+                <!-- Official Link -->
+
+                <label>
+                    <strong>
+                        Official Website
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="url"
+                    name="official_link"
+                    placeholder="https://..."
+                >
+
+                <br><br>
+
+
+                <!-- Amount -->
+
+                <label>
+                    <strong>
+                        💰 Scholarship Amount
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="amount"
+                    placeholder="Example: ₹50,000 per year"
+                >
+
+                <br><br>
+
+
+                <!-- =================================
+                     APPLICATION DEADLINE
+                     ================================= -->
+
+                <label>
+                    <strong>
+                        📅 Application Deadline
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="date"
+                    name="deadline"
+                    id="deadline"
+                >
+
+                <br>
+
+                <small>
+                    Select the official application deadline.
+                </small>
+
+                <br><br>
+
+
+                <!-- Application Fee -->
+
+                <label>
+                    <strong>
+                        💵 Application Fee
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="application_fee"
+                    placeholder="Example: No fee"
+                >
+
+                <br><br>
+
+
+                <!-- Minimum Percentage -->
+
+                <label>
+                    <strong>
+                        Minimum Percentage
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="number"
+                    name="minimum_percentage"
+                    step="0.01"
+                    min="0"
+                    max="100"
+                    placeholder="Example: 60"
+                >
+
+                <br><br>
+
+
+                <!-- Maximum Income -->
+
+                <label>
+                    <strong>
+                        Maximum Family Income
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="number"
+                    name="maximum_income"
+                    step="0.01"
+                    min="0"
+                    placeholder="Example: 500000"
+                >
+
+                <br><br>
+
+
+                <!-- Eligible Course -->
+
+                <label>
+                    <strong>
+                        Eligible Course
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="eligible_course"
+                    placeholder="Example: UG / Engineering / All"
+                >
+
+                <br><br>
+
+
+                <!-- Eligible Year -->
+
+                <label>
+                    <strong>
+                        Eligible Year
+                    </strong>
+                </label>
+
+                <br>
+
+                <input
+                    type="text"
+                    name="eligible_year"
+                    placeholder="Example: All / 1st / 2nd / 3rd"
+                >
+
+                <br><br>
+
+
+                <!-- Submit -->
+
+                <button type="submit">
+                    💾 Save Scholarship
+                </button>
+
+            </form>
+
+
+            <br>
+
+
+            <a href="/admin/scholarships">
+
+                <button type="button">
+                    ← Back to Scholarships
+                </button>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

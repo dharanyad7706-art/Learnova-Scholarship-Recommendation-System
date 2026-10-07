@@ -1,0 +1,260 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Applications - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA ADMIN
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/admin-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/admin/applications">
+                Applications
+            </a>
+
+            <a href="/admin-logout">
+                Logout
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Applications -->
+
+    <section class="dashboard">
+
+        <h1>
+            📋 Student Applications
+        </h1>
+
+        <p>
+            Review and manage scholarship applications.
+        </p>
+
+
+        {% if applications %}
+
+            {% for application in applications %}
+
+                <div class="application-card">
+
+                    <h2>
+                        🎓 {{ application[2] }}
+                    </h2>
+
+
+                    <hr>
+
+
+                    <h3>
+                        👤 Student Details
+                    </h3>
+
+                    <p>
+                        <strong>Name:</strong>
+                        {{ application[3] }}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        {{ application[4] }}
+                    </p>
+
+                    <p>
+                        <strong>Mobile:</strong>
+                        {{ application[5] }}
+                    </p>
+
+
+                    <h3>
+                        🎓 Academic Details
+                    </h3>
+
+                    <p>
+                        <strong>College:</strong>
+                        {{ application[6] }}
+                    </p>
+
+                    <p>
+                        <strong>Course:</strong>
+                        {{ application[7] }}
+                    </p>
+
+                    <p>
+                        <strong>Department:</strong>
+                        {{ application[8] }}
+                    </p>
+
+                    <p>
+                        <strong>Percentage:</strong>
+                        {{ application[9] }}%
+                    </p>
+
+                    <p>
+                        <strong>Annual Family Income:</strong>
+                        ₹{{ application[10] }}
+                    </p>
+
+
+                    <h3>
+                        📄 Documents
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Marksheet:
+
+                            {% if application[11] %}
+                                ✅ Uploaded
+                            {% else %}
+                                ❌ Not Uploaded
+                            {% endif %}
+                        </li>
+
+
+                        <li>
+                            Income Certificate:
+
+                            {% if application[12] %}
+                                ✅ Uploaded
+                            {% else %}
+                                ❌ Not Uploaded
+                            {% endif %}
+                        </li>
+
+
+                        <li>
+                            Bonafide Certificate:
+
+                            {% if application[13] %}
+                                ✅ Uploaded
+                            {% else %}
+                                ❌ Not Uploaded
+                            {% endif %}
+                        </li>
+
+
+                        <li>
+                            College ID:
+
+                            {% if application[14] %}
+                                ✅ Uploaded
+                            {% else %}
+                                ❌ Not Uploaded
+                            {% endif %}
+                        </li>
+
+                    </ul>
+
+
+                    <hr>
+
+
+                    <h3>
+                        📌 Current Status
+                    </h3>
+
+
+                    {% if application[15] == "Submitted" %}
+
+                        <p>
+                            🟢 <strong>Submitted</strong>
+                        </p>
+
+                    {% elif application[15] == "Under Review" %}
+
+                        <p>
+                            🟡 <strong>Under Review</strong>
+                        </p>
+
+                    {% elif application[15] == "Approved" %}
+
+                        <p>
+                            ✅ <strong>Approved</strong>
+                        </p>
+
+                    {% elif application[15] == "Rejected" %}
+
+                        <p>
+                            ❌ <strong>Rejected</strong>
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            {{ application[15] }}
+                        </p>
+
+                    {% endif %}
+
+
+                    <br>
+
+
+                    <a href="/admin/application/{{ application[0] }}/review">
+
+                        <button type="button">
+                            🔍 Review Application
+                        </button>
+
+                    </a>
+
+                </div>
+
+
+                <br><br>
+
+            {% endfor %}
+
+
+        {% else %}
+
+            <div class="feature-card">
+
+                <h2>
+                    📭 No Applications Found
+                </h2>
+
+                <p>
+                    No scholarship applications have
+                    been submitted yet.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </section>
+
+</body>
+
+</html>
+```

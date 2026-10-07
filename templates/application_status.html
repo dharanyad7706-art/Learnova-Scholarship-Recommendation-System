@@ -1,0 +1,251 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Application Status - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            LEARNOVA
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/dashboard">Dashboard</a>
+            <a href="/scholarships">Scholarships</a>
+            <a href="/profile">Profile</a>
+            <a href="/my-applications">My Applications</a>
+            <a href="/logout">Logout</a>
+
+        </div>
+
+    </nav>
+
+
+    <section class="dashboard">
+
+        <div class="feature-card">
+
+            <h1>📋 Application Status</h1>
+
+            <h2>
+                🎓 {{ application[2] }}
+            </h2>
+
+            <hr>
+
+
+            <h3>👤 Applicant Details</h3>
+
+            <p>
+                <strong>Name:</strong>
+                {{ application[3] }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ application[4] }}
+            </p>
+
+            <p>
+                <strong>Mobile:</strong>
+                {{ application[5] }}
+            </p>
+
+
+            <h3>🎓 Academic Details</h3>
+
+            <p>
+                <strong>College:</strong>
+                {{ application[6] }}
+            </p>
+
+            <p>
+                <strong>Course:</strong>
+                {{ application[7] }}
+            </p>
+
+            <p>
+                <strong>Department:</strong>
+                {{ application[8] }}
+            </p>
+
+            <p>
+                <strong>Percentage:</strong>
+                {{ application[9] }}%
+            </p>
+
+            <p>
+                <strong>Annual Family Income:</strong>
+                ₹{{ application[10] }}
+            </p>
+
+
+            <hr>
+
+
+            <h3>📄 Uploaded Documents</h3>
+
+
+            <p>
+                <strong>Marksheet:</strong>
+
+                {% if application[11] %}
+
+                    ✅ {{ application[11] }}
+
+                {% else %}
+
+                    ❌ Not Uploaded
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+                <strong>Income Certificate:</strong>
+
+                {% if application[12] %}
+
+                    ✅ {{ application[12] }}
+
+                {% else %}
+
+                    ❌ Not Uploaded
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+                <strong>Bonafide Certificate:</strong>
+
+                {% if application[13] %}
+
+                    ✅ {{ application[13] }}
+
+                {% else %}
+
+                    ❌ Not Uploaded
+
+                {% endif %}
+
+            </p>
+
+
+            <p>
+                <strong>College ID:</strong>
+
+                {% if application[14] %}
+
+                    ✅ {{ application[14] }}
+
+                {% else %}
+
+                    ❌ Not Uploaded
+
+                {% endif %}
+
+            </p>
+
+
+            <hr>
+
+
+            <h3>📌 Application Status</h3>
+
+
+            {% if application[15] == "Submitted" %}
+
+                <p>
+                    🟢
+                    <strong>Submitted</strong>
+                </p>
+
+                <p>
+                    Your scholarship application has been
+                    successfully submitted.
+                </p>
+
+
+            {% elif application[15] == "Under Review" %}
+
+                <p>
+                    🟡
+                    <strong>Under Review</strong>
+                </p>
+
+                <p>
+                    Your application is currently being reviewed.
+                </p>
+
+
+            {% elif application[15] == "Approved" %}
+
+                <p>
+                    ✅
+                    <strong>Approved</strong>
+                </p>
+
+                <p>
+                    Your scholarship application has been approved.
+                </p>
+
+
+            {% elif application[15] == "Rejected" %}
+
+                <p>
+                    ❌
+                    <strong>Rejected</strong>
+                </p>
+
+                <p>
+                    Your scholarship application was rejected.
+                </p>
+
+
+            {% else %}
+
+                <p>
+                    {{ application[15] }}
+                </p>
+
+            {% endif %}
+
+
+            <br>
+
+
+            <a href="/my-applications">
+
+                <button type="button">
+                    ← Back to My Applications
+                </button>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>
+```

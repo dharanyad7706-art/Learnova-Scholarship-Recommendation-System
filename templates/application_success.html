@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Application Submitted - Learnova</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+        }
+
+        .success-page {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .success-card {
+            width: 100%;
+            max-width: 650px;
+
+            background: white;
+
+            padding: 40px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #e8f5e9;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 42px;
+
+            color: #2e7d32;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .success-message {
+            color: #555;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            margin-bottom: 25px;
+        }
+
+        .scholarship-name {
+            font-weight: bold;
+
+            color: #333;
+
+            margin: 15px 0 25px;
+        }
+
+        .info-box {
+            background: #f5f7fb;
+
+            padding: 18px;
+
+            border-radius: 8px;
+
+            margin-bottom: 25px;
+
+            color: #555;
+        }
+
+        .button-container {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .primary-btn {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .secondary-btn {
+            background: #e5e7eb;
+
+            color: #333;
+        }
+
+        .secondary-btn:hover {
+            background: #d1d5db;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="success-page">
+
+        <div class="success-card">
+
+            <!-- SUCCESS ICON -->
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1>
+                Application Submitted Successfully!
+            </h1>
+
+
+            <!-- MESSAGE -->
+
+            <p class="success-message">
+
+                Your scholarship application has been
+                successfully submitted.
+
+            </p>
+
+
+            <!-- SCHOLARSHIP NAME -->
+
+            {% if scholarship_name %}
+
+            <div class="scholarship-name">
+
+                Scholarship:
+
+                {{ scholarship_name }}
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- INFORMATION -->
+
+            <div class="info-box">
+
+                <p>
+                    Your application has been recorded
+                    in Learnova.
+                </p>
+
+                <p>
+                    You can check your application status
+                    from the
+                    <strong>My Applications</strong>
+                    section.
+                </p>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-container">
+
+                <!-- I APPLIED BUTTON -->
+
+                <a href="{{ url_for('my_applications') }}"
+                   class="btn primary-btn">
+
+                    I Applied for Scholarship
+
+                </a>
+
+
+                <!-- DASHBOARD BUTTON -->
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="btn secondary-btn">
+
+                    Back to Dashboard
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
